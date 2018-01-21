@@ -292,13 +292,10 @@ namespace Tanji.Services
             UpdateBtn_Click(sender, e);
         }
 
-        private async void VariablesLv_ItemSelected(object sender, EventArgs e)
+        private void VariablesLv_ItemSelected(object sender, EventArgs e)
         {
             VariableTxt.Text = VariablesLv.SelectedItem.Text;
             ValueTxt.Text = VariablesLv.SelectedItem.SubItems[1].Text;
-
-            await Task.Delay(125);
-            ValueTxt.Focus();
         }
         private void VariablesLv_ItemSelectionStateChanged(object sender, EventArgs e)
         {

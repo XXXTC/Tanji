@@ -158,7 +158,7 @@
             this.ValueTxt.Size = new System.Drawing.Size(384, 20);
             this.ValueTxt.TabIndex = 1;
             this.ValueTxt.Text = "";
-            this.ValueTxt.TextPaddingWidth = 23;
+            this.ValueTxt.TextPaddingWidth = 21;
             this.ValueTxt.Title = "Value";
             this.ValueTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ValueTxt_KeyDown);
             // 
