@@ -11,5 +11,9 @@ This is the download for users who do not wish to develop modules, and instead j
 If you wish to create modules for Tanji, then you will need to download the SDK (*Runtime included*), and have your project(s) target this framework version.
 * [.NET Framework 4.7.1 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=56119)
 
-### Donations
-Send money please: [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HMYZ4GB5N2PAU)
+### Donations  
+[PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HMYZ4GB5N2PAU)  
+BTC: 18LzWx4GVazwiGsZQ4Xokmw6uhCYDvA2jr  
+LTC: LajDrbNgh1fHDPAmSYNr9dpXr377dHTv5h  
+ETH: 0xfdd1dc38a89b0194c610a48a7ab8ea1deed2e0dc  
+XRP: rEb8TK3gBgk5auZkwc6sHnwrGVJH8DuaLh, Tag: 107648153
