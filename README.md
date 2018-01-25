@@ -17,3 +17,8 @@ BTC: 18LzWx4GVazwiGsZQ4Xokmw6uhCYDvA2jr
 LTC: LajDrbNgh1fHDPAmSYNr9dpXr377dHTv5h  
 ETH: 0xfdd1dc38a89b0194c610a48a7ab8ea1deed2e0dc  
 XRP: rEb8TK3gBgk5auZkwc6sHnwrGVJH8DuaLh, Tag: 107648153
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/ArachisH/Tanji/badge.svg?style=beer-square)](https://beerpay.io/ArachisH/Tanji)  [![Beerpay](https://beerpay.io/ArachisH/Tanji/make-wish.svg?style=flat-square)](https://beerpay.io/ArachisH/Tanji?focus=wish)
