@@ -57,7 +57,7 @@ namespace Tangine.Controls
 
         public TangineTabControl()
         {
-            SetStyle((ControlStyles)2050, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
 
             SizeMode = TabSizeMode.Fixed;
@@ -134,12 +134,9 @@ namespace Tangine.Controls
             {
                 Rectangle tabRegion, titleRegion, glowRegion;
 
-                using (var titleFormat = new StringFormat())
                 using (var skinBrush = new SolidBrush(Skin))
-                using (var titleBrush = new SolidBrush(TitleColor))
                 {
-                    titleFormat.Alignment = StringAlignment.Center;
-                    titleFormat.LineAlignment = StringAlignment.Center;
+                    var format = TextFormatFlags.VerticalCenter;
                     for (int i = 0; i < TabPages.Count; i++)
                     {
                         tabRegion = GetTabRect(i);
@@ -150,33 +147,35 @@ namespace Tangine.Controls
                             default:
                             case TabAlignment.Top:
                             {
+                                format |= TextFormatFlags.HorizontalCenter;
                                 titleRegion = GetVerticalTitleRegion(i, -4);
                                 glowRegion = GetVerticalGlowRegion(tabRegion, titleRegion, tabRegion.Height - 2);
                                 break;
                             }
                             case TabAlignment.Bottom:
                             {
+                                format |= TextFormatFlags.HorizontalCenter;
                                 titleRegion = GetVerticalTitleRegion(i, 0);
                                 glowRegion = GetVerticalGlowRegion(tabRegion, titleRegion, 0);
                                 break;
                             }
                             case TabAlignment.Left:
                             {
-                                titleFormat.Alignment = StringAlignment.Far;
+                                format |= TextFormatFlags.Right;
                                 titleRegion = GetHorizontalTitleRegion(i, -2);
                                 glowRegion = GetHorizontalGlowRegion(tabRegion, titleRegion, (titleRegion.X + tabRegion.Width));
                                 break;
                             }
                             case TabAlignment.Right:
                             {
-                                titleFormat.Alignment = StringAlignment.Near;
+                                format |= TextFormatFlags.Left;
                                 titleRegion = GetHorizontalTitleRegion(i, 4);
                                 glowRegion = GetHorizontalGlowRegion(tabRegion, titleRegion, tabRegion.X);
                                 break;
                             }
                         }
                         e.Graphics.FillRectangle((isSelected ? skinBrush : Brushes.Silver), glowRegion);
-                        e.Graphics.DrawString(TabPages[i].Text, Font, titleBrush, titleRegion, titleFormat);
+                        TextRenderer.DrawText(e.Graphics, TabPages[i].Text, Font, titleRegion, TitleColor, format);
                     }
                 }
             }

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
+using System.ComponentModel.Design;
 
 namespace Tangine.Controls
 {
@@ -11,15 +12,15 @@ namespace Tangine.Controls
     public class TangineButton : Control, IButtonControl
     {
         private bool _isPressed;
-        
+
         [DefaultValue(DialogResult.None)]
         public DialogResult DialogResult { get; set; }
 
         [Browsable(false)]
         public override Color BackColor
         {
-            get => base.BackColor;
-            set => base.BackColor = value;
+            get => Skin;
+            set => Skin = value;
         }
 
         [Browsable(false)]
@@ -44,7 +45,7 @@ namespace Tangine.Controls
         }
 
         [SettingsBindable(true)]
-        [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public override string Text
         {
             get => base.Text;
@@ -71,6 +72,8 @@ namespace Tangine.Controls
             set
             {
                 _skin = value;
+                base.BackColor = value;
+
                 Invalidate();
             }
         }
@@ -101,11 +104,10 @@ namespace Tangine.Controls
 
         public TangineButton()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
 
             DoubleBuffered = true;
             Size = new Size(100, 20);
-            BackColor = Color.Transparent;
         }
 
         public void PerformClick()
@@ -128,9 +130,9 @@ namespace Tangine.Controls
             e.Graphics.Clear(Enabled ? Skin : Color.FromArgb(240, 240, 240));
             var format = (TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
             var textRect = new Rectangle(1 + TextOffset.X, 1 + TextOffset.Y, Width - 2, Height - 2);
+            var borderRect = new Rectangle(Location.X, Location.Y, Size.Width + 2, Size.Height + 2);
             if (Enabled)
             {
-                var borderRect = new Rectangle(Location.X, Location.Y, Size.Width + 2, Size.Height + 2);
                 TextRenderer.DrawText(e.Graphics, Text, Font, textRect, Color.White, format);
                 if (_isPressed)
                 {
@@ -146,7 +148,7 @@ namespace Tangine.Controls
                         e.Graphics.FillRectangle(bottomShadowGradient, bottomShadowRect);
                     }
                 }
-                else
+                else if (IsShadowEnabled)
                 {
                     using (Graphics pGraphics = Parent.CreateGraphics())
                     using (var borderPen = new Pen(Color.FromArgb(50, Color.Black)))
@@ -161,6 +163,7 @@ namespace Tangine.Controls
             }
             else
             {
+                Parent.Invalidate(borderRect, false);
                 ControlPaint.DrawStringDisabled(e.Graphics, Text, Font, SystemColors.Control, textRect, format);
             }
             using (var borderPen = new Pen(Color.FromArgb(50, Color.Black)))

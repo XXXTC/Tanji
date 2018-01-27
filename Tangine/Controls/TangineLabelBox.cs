@@ -8,6 +8,8 @@ namespace Tangine.Controls
     [DesignerCategory("Code")]
     public class TangineLabelBox : Control
     {
+        private Rectangle _titleRect;
+
         [Browsable(false)]
         public TextBox Box { get; }
 
@@ -25,7 +27,7 @@ namespace Tangine.Controls
             set => Box.Text = value;
         }
 
-        private int _textPaddingWidth = 10;
+        private int _textPaddingWidth = 0;
         [DefaultValue(10)]
         public int TextPaddingWidth
         {
@@ -33,7 +35,7 @@ namespace Tangine.Controls
             set
             {
                 _textPaddingWidth = value;
-                Invalidate();
+                Title = Title;
             }
         }
 
@@ -45,6 +47,13 @@ namespace Tangine.Controls
             set
             {
                 _title = value;
+
+                Size titleSize = TextRenderer.MeasureText(Title, Font);
+                titleSize.Width += TextPaddingWidth;
+                titleSize.Height = Height;
+                _titleRect = new Rectangle(new Point(0, -1), titleSize);
+
+                Box.Size = new Size(Width - titleSize.Width - 7, Height);
                 Invalidate();
             }
         }
@@ -62,17 +71,28 @@ namespace Tangine.Controls
 
         public TangineLabelBox()
         {
-            SetStyle((ControlStyles)2050, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
             Size = new Size(200, 20);
             DoubleBuffered = true;
 
-            Box = new TextBox();
-            Box.KeyDown += (sender, e) => { OnKeyDown(e); };
-
-            Box.TextAlign = HorizontalAlignment.Center;
-            Box.Anchor = (AnchorStyles.Left | AnchorStyles.Right);
+            Box = new TextBox
+            {
+                Dock = DockStyle.Right,
+                TextAlign = HorizontalAlignment.Center
+            };
+            Box.KeyDown += Box_KeyDown;
+            Box.TextChanged += Box_TextChanged;
 
             Controls.Add(Box);
+        }
+
+        private void Box_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e);
+        }
+        private void Box_TextChanged(object sender, EventArgs e)
+        {
+            OnTextChanged(e);
         }
 
         protected override void OnGotFocus(EventArgs e)
@@ -91,18 +111,10 @@ namespace Tangine.Controls
             e.Graphics.Clear(Color.White);
             if (!string.IsNullOrWhiteSpace(Title))
             {
+                TextRenderer.DrawText(e.Graphics, Title, Font, _titleRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
                 using (var lineColor = new Pen(Color.FromArgb(243, 63, 63)))
                 {
-                    Size titleSize = TextRenderer.MeasureText(e.Graphics, Title, Font);
-                    titleSize.Width += (TextPaddingWidth + 1);
-                    titleSize.Height = Height;
-
-                    var titleRect = new Rectangle(new Point(0, 0), titleSize);
-                    Box.Size = new Size((Width - titleRect.Width) - 7, Height);
-                    Box.Location = new Point(titleRect.Right + 7, 0);
-
-                    TextRenderer.DrawText(e.Graphics, Title, Font, titleRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
-                    e.Graphics.DrawLine(lineColor, titleRect.Right, 0, titleRect.Right, Height - 1);
+                    e.Graphics.DrawLine(lineColor, _titleRect.Right, 0, _titleRect.Right, Height);
                 }
             }
             base.OnPaint(e);
@@ -110,12 +122,18 @@ namespace Tangine.Controls
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
             base.SetBoundsCore(x, y, width, 20, specified);
+            if (Box != null)
+            {
+                Title = Title;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (!IsDisposed && disposing)
             {
+                Box.KeyDown -= Box_KeyDown;
+                Box.TextChanged -= Box_TextChanged;
                 Box.Dispose();
             }
             base.Dispose(disposing);

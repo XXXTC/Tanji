@@ -70,10 +70,11 @@ namespace Tangine.Controls
 
         public TangineLabel()
         {
-            SetStyle((ControlStyles)2050, true);
-            BackColor = Color.White;
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
+
             Height = 20;
+            BackColor = Color.White;
         }
 
         protected override void OnPaint(PaintEventArgs e)
