@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Tanji.Network;
 using Tanji.Controls;
 using Tanji.Services;
+using Tanji.Windows.Dialogs;
 
 using Sulakore.Habbo;
 using Sulakore.Network;
@@ -19,13 +20,14 @@ namespace Tanji.Windows
     [DesignerCategory("Form")]
     public partial class PacketLoggerFrm : ObservableForm, IHaltable, IReceiver
     {
+        private int _streak = 1;
+        private FindDialog _findDialog;
+        private DataInterceptedEventArgs _lastIntercepted;
+
         private readonly object _queueWriteLock;
         private readonly object _queueProcessLock;
         private readonly Queue<DataInterceptedEventArgs> _intercepted;
         private readonly Action<List<(string, Color)>> _displayEntries;
-
-        private int _streak = 1;
-        private DataInterceptedEventArgs _lastIntercepted;
 
         #region Bindable Properties
         private bool _isDisplayingBlocked = true;
@@ -131,6 +133,17 @@ namespace Tanji.Windows
             }
         }
 
+        private bool _isAutoScrolling = true;
+        public bool IsAutoScrolling
+        {
+            get => _isAutoScrolling;
+            set
+            {
+                _isAutoScrolling = value;
+                RaiseOnPropertyChanged();
+            }
+        }
+
         public new bool TopMost
         {
             get => base.TopMost;
@@ -147,6 +160,8 @@ namespace Tanji.Windows
             }
         }
         #endregion
+
+        public bool IsFindDialogOpened => (!(_findDialog?.IsDisposed ?? true));
 
         public Color DetailHighlight { get; set; } = Color.Cyan;
         public Color DefaultHighlight { get; set; } = Color.White;
@@ -167,6 +182,7 @@ namespace Tanji.Windows
             Bind(BlockedBtn, "Checked", nameof(IsDisplayingBlocked));
             Bind(ReplacedBtn, "Checked", nameof(IsDisplayingReplaced));
             Bind(HashNameBtn, "Checked", nameof(IsDisplayingHashName));
+            Bind(AutoScrollingBtn, "Checked", nameof(IsAutoScrolling));
             Bind(ViewOutgoingBtn, "Checked", nameof(IsViewingOutgoing));
             Bind(ViewIncomingBtn, "Checked", nameof(IsViewingIncoming));
             Bind(ClassNameBtn, "Checked", nameof(IsDisplayingClassName));
@@ -174,7 +190,22 @@ namespace Tanji.Windows
             Bind(DismantledBtn, "Checked", nameof(IsDisplayingDismantled));
             Bind(HexadecimalBtn, "Checked", nameof(IsDisplayingHexadecimal));
         }
-        
+
+        private void FindBtn_Click(object sender, EventArgs e)
+        {
+            if (!IsFindDialogOpened)
+            {
+                _findDialog = new FindDialog(LogTxt);
+                _findDialog.Show(this);
+            }
+            else _findDialog.BringToFront();
+        }
+        private void EmptyLogBtn_Click(object sender, EventArgs e)
+        {
+            _lastIntercepted = null;
+            LogTxt.Clear();
+        }
+
         private void PacketLoggerFrm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
@@ -349,39 +380,36 @@ namespace Tanji.Windows
             }
         }
 
-        private bool AreEqual(HPacket p1, HPacket p2)
-        {
-            byte[] p1Data = p1.ToBytes();
-            byte[] p2Data = p2.ToBytes();
-            if (p1Data.Length != p2Data.Length) return false;
-
-            return (NativeMethods.memcmp(p1Data, p2Data, p2Data.Length) == 0);
-        }
         private void DisplayEntries(List<(string, Color)> entries)
         {
-            foreach ((string message, Color highlight) in entries)
+            IDisposable suspender = (!IsAutoScrolling ? LogTxt.GetSuspender() : null);
+            try
             {
-                if (message.StartsWith("RL")) // Replace Line
+                foreach ((string message, Color highlight) in entries)
                 {
-                    int currentLineIndex = (LogTxt.Lines.Length - 1);
-                    string currentLine = LogTxt.Lines[currentLineIndex];
+                    if (message.StartsWith("RL")) // Replace Line
+                    {
+                        int currentLineIndex = (LogTxt.Lines.Length - 1);
+                        string currentLine = LogTxt.Lines[currentLineIndex];
+                        int currentLineFirstCharIndex = LogTxt.Find(currentLine, RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
 
-                    int currentLineFirstCharIndex = LogTxt.Find(currentLine, RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
-                    LogTxt.SelectionStart = currentLineFirstCharIndex;
-                    LogTxt.SelectionLength = currentLine.Length;
+                        LogTxt.SelectionStart = currentLineFirstCharIndex;
+                        LogTxt.SelectionLength = currentLine.Length;
 
-                    LogTxt.SelectionColor = highlight;
-                    LogTxt.SelectedText = message.Substring(2);
-                }
-                else
-                {
-                    LogTxt.SelectionStart = LogTxt.TextLength;
-                    LogTxt.SelectionLength = 0;
+                        LogTxt.SelectionColor = highlight;
+                        LogTxt.SelectedText = message.Substring(2);
+                    }
+                    else
+                    {
+                        LogTxt.SelectionStart = LogTxt.TextLength;
+                        LogTxt.SelectionLength = 0;
 
-                    LogTxt.SelectionColor = highlight;
-                    LogTxt.AppendText(message);
+                        LogTxt.SelectionColor = highlight;
+                        LogTxt.AppendText(message);
+                    }
                 }
             }
+            finally { suspender?.Dispose(); }
         }
         private MessageItem GetMessage(DataInterceptedEventArgs e)
         {

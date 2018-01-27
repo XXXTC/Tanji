@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\BindableToolStripMenuItem.cs" />
+    <Compile Include="Controls\RichLogBox.cs" />
     <Compile Include="Controls\ObservableForm.cs" />
     <Compile Include="Controls\ObservablePage.cs" />
     <Compile Include="Helpers\Converters\HotelEndPointConverter.cs" />

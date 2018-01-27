@@ -19,6 +19,7 @@ using Sulakore.Network;
 using Eavesdrop;
 
 using Flazzy;
+using Tanji.Windows.Dialogs;
 
 namespace Tanji.Services
 {
@@ -101,9 +102,9 @@ namespace Tanji.Services
             InitializeComponent();
 
             Bind(StatusTxt, "Text", nameof(Status));
-            Bind(CustomClientTxt.Box, "Text", nameof(CustomClientPath));
+            Bind(CustomClientTxt, "Text", nameof(CustomClientPath));
             Bind(AutomaticServerExtractionChbx, "Checked", nameof(IsExtractingHotelServer));
-            Bind(HotelServerTxt.Box, "Text", nameof(HotelServer), new HotelEndPointConverter(), DataSourceUpdateMode.OnValidation);
+            Bind(HotelServerTxt, "Text", nameof(HotelServer), new HotelEndPointConverter(), DataSourceUpdateMode.OnValidation);
         }
 
         private Task InjectGameClientAsync(object sender, RequestInterceptedEventArgs e)
@@ -351,6 +352,8 @@ namespace Tanji.Services
             await Master.Connection.InterceptAsync(HotelServer).ConfigureAwait(false);
             Status = STANDING_BY;
         }
+
+
 
         #region IHaltable Implementation
         public void Halt()

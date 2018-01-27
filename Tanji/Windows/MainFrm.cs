@@ -14,6 +14,18 @@ namespace Tanji.Windows
     {
         private readonly PacketLoggerFrm _packetLogger;
 
+        public new bool TopMost
+        {
+            get => base.TopMost;
+            set
+            {
+                base.TopMost = value;
+                RaiseOnPropertyChanged();
+
+                _packetLogger.BringToFront();
+            }
+        }
+
         public MainFrm()
         {
             _packetLogger = new PacketLoggerFrm();

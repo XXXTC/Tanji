@@ -40,11 +40,12 @@ namespace Tanji.Controls
             }
         }
 
-        protected void Bind(IBindableComponent component, string propertyName, string dataMember, IValueConverter converter = null)
+        protected void Bind(IBindableComponent component, string propertyName, string dataMember, IValueConverter converter = null, DataSourceUpdateMode dataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged)
         {
             var binding = new CustomBinding(propertyName, this, dataMember, converter)
             {
-                DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged
+                DataSourceUpdateMode = dataSourceUpdateMode,
+                ControlUpdateMode = ControlUpdateMode.OnPropertyChanged
             };
             component.DataBindings.Add(binding);
             _bindings[dataMember] = binding;

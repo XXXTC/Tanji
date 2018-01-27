@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "sso.ticket",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "furnidata.load.url",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
             "productdata.load.url",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
             "avatareditor.promohabbos",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "external.texts.txt",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
             "external.variables.txt",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem(new string[] {
             "external.figurepartlist.txt",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem(new string[] {
             "external.override.texts.txt",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem(new string[] {
             "external.override.variables.txt",
             ""}, -1);
             this.AutomaticServerExtractionChbx = new System.Windows.Forms.CheckBox();
@@ -87,7 +87,7 @@
             this.AutomaticServerExtractionChbx.Location = new System.Drawing.Point(326, 5);
             this.AutomaticServerExtractionChbx.Name = "AutomaticServerExtractionChbx";
             this.AutomaticServerExtractionChbx.Size = new System.Drawing.Size(157, 17);
-            this.AutomaticServerExtractionChbx.TabIndex = 1;
+            this.AutomaticServerExtractionChbx.TabIndex = 0;
             this.AutomaticServerExtractionChbx.TabStop = false;
             this.AutomaticServerExtractionChbx.Text = "Automatic Server Extraction";
             this.AutomaticServerExtractionChbx.UseVisualStyleBackColor = true;
@@ -118,7 +118,6 @@
             // 
             // UpdateBtn
             // 
-            this.UpdateBtn.BackColor = System.Drawing.Color.Transparent;
             this.UpdateBtn.Enabled = false;
             this.UpdateBtn.Location = new System.Drawing.Point(393, 219);
             this.UpdateBtn.Name = "UpdateBtn";
@@ -130,12 +129,11 @@
             // 
             // ClearBtn
             // 
-            this.ClearBtn.BackColor = System.Drawing.Color.Transparent;
             this.ClearBtn.Enabled = false;
             this.ClearBtn.Location = new System.Drawing.Point(393, 245);
             this.ClearBtn.Name = "ClearBtn";
             this.ClearBtn.Size = new System.Drawing.Size(90, 20);
-            this.ClearBtn.TabIndex = 16;
+            this.ClearBtn.TabIndex = 0;
             this.ClearBtn.TabStop = false;
             this.ClearBtn.Text = "Clear";
             this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
@@ -146,9 +144,10 @@
             this.VariableTxt.Location = new System.Drawing.Point(3, 245);
             this.VariableTxt.Name = "VariableTxt";
             this.VariableTxt.Size = new System.Drawing.Size(384, 20);
-            this.VariableTxt.TabIndex = 15;
+            this.VariableTxt.TabIndex = 0;
             this.VariableTxt.TabStop = false;
             this.VariableTxt.Text = "";
+            this.VariableTxt.TextPaddingWidth = 0;
             this.VariableTxt.Title = "Variable";
             // 
             // ValueTxt
@@ -157,8 +156,9 @@
             this.ValueTxt.Name = "ValueTxt";
             this.ValueTxt.Size = new System.Drawing.Size(384, 20);
             this.ValueTxt.TabIndex = 1;
+            this.ValueTxt.TabStop = false;
             this.ValueTxt.Text = "";
-            this.ValueTxt.TextPaddingWidth = 21;
+            this.ValueTxt.TextPaddingWidth = 11;
             this.ValueTxt.Title = "Value";
             this.ValueTxt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ValueTxt_KeyDown);
             // 
@@ -173,7 +173,6 @@
             // 
             // DestroyCertificatesBtn
             // 
-            this.DestroyCertificatesBtn.BackColor = System.Drawing.Color.Transparent;
             this.DestroyCertificatesBtn.Location = new System.Drawing.Point(198, 272);
             this.DestroyCertificatesBtn.Name = "DestroyCertificatesBtn";
             this.DestroyCertificatesBtn.Size = new System.Drawing.Size(189, 20);
@@ -184,7 +183,6 @@
             // 
             // ExportCertificateAuthorityBtn
             // 
-            this.ExportCertificateAuthorityBtn.BackColor = System.Drawing.Color.Transparent;
             this.ExportCertificateAuthorityBtn.Location = new System.Drawing.Point(3, 272);
             this.ExportCertificateAuthorityBtn.Name = "ExportCertificateAuthorityBtn";
             this.ExportCertificateAuthorityBtn.Size = new System.Drawing.Size(189, 20);
@@ -195,11 +193,10 @@
             // 
             // BrowseBtn
             // 
-            this.BrowseBtn.BackColor = System.Drawing.Color.Transparent;
             this.BrowseBtn.Location = new System.Drawing.Point(393, 298);
             this.BrowseBtn.Name = "BrowseBtn";
             this.BrowseBtn.Size = new System.Drawing.Size(90, 20);
-            this.BrowseBtn.TabIndex = 9;
+            this.BrowseBtn.TabIndex = 0;
             this.BrowseBtn.TabStop = false;
             this.BrowseBtn.Text = "Browse";
             this.BrowseBtn.Click += new System.EventHandler(this.BrowseBtn_Click);
@@ -209,29 +206,30 @@
             this.CustomClientTxt.Location = new System.Drawing.Point(3, 298);
             this.CustomClientTxt.Name = "CustomClientTxt";
             this.CustomClientTxt.Size = new System.Drawing.Size(384, 20);
-            this.CustomClientTxt.TabIndex = 2;
+            this.CustomClientTxt.TabIndex = 0;
+            this.CustomClientTxt.TabStop = false;
             this.CustomClientTxt.Text = "";
+            this.CustomClientTxt.TextPaddingWidth = 0;
             this.CustomClientTxt.Title = "Custom Client";
             // 
             // CancelBtn
             // 
-            this.CancelBtn.BackColor = System.Drawing.Color.Transparent;
             this.CancelBtn.Enabled = false;
             this.CancelBtn.Location = new System.Drawing.Point(297, 325);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(90, 20);
-            this.CancelBtn.TabIndex = 6;
+            this.CancelBtn.TabIndex = 1;
             this.CancelBtn.TabStop = false;
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
             // ConnectBtn
             // 
-            this.ConnectBtn.BackColor = System.Drawing.Color.Transparent;
             this.ConnectBtn.Location = new System.Drawing.Point(393, 325);
             this.ConnectBtn.Name = "ConnectBtn";
             this.ConnectBtn.Size = new System.Drawing.Size(90, 20);
-            this.ConnectBtn.TabIndex = 3;
+            this.ConnectBtn.TabIndex = 0;
+            this.ConnectBtn.TabStop = false;
             this.ConnectBtn.Text = "Connect";
             this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
@@ -251,7 +249,9 @@
             this.HotelServerTxt.Name = "HotelServerTxt";
             this.HotelServerTxt.Size = new System.Drawing.Size(317, 20);
             this.HotelServerTxt.TabIndex = 0;
+            this.HotelServerTxt.TabStop = false;
             this.HotelServerTxt.Text = "*:*";
+            this.HotelServerTxt.TextPaddingWidth = 0;
             this.HotelServerTxt.Title = "Hotel Server";
             // 
             // VariablesLv
@@ -264,25 +264,25 @@
             this.VariablesLv.GridLines = true;
             this.VariablesLv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.VariablesLv.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
+            listViewItem10.StateImageIndex = 0;
+            listViewItem11.StateImageIndex = 0;
+            listViewItem12.StateImageIndex = 0;
+            listViewItem13.StateImageIndex = 0;
+            listViewItem14.StateImageIndex = 0;
+            listViewItem15.StateImageIndex = 0;
+            listViewItem16.StateImageIndex = 0;
+            listViewItem17.StateImageIndex = 0;
+            listViewItem18.StateImageIndex = 0;
             this.VariablesLv.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18});
             this.VariablesLv.Location = new System.Drawing.Point(3, 30);
             this.VariablesLv.MultiSelect = false;
             this.VariablesLv.Name = "VariablesLv";

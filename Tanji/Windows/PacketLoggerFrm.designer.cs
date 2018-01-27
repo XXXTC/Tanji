@@ -48,10 +48,11 @@
             this.ViewOutgoingBtn = new Tanji.Controls.BindableToolStripMenuItem();
             this.ViewIncomingBtn = new Tanji.Controls.BindableToolStripMenuItem();
             this.ViewSep2 = new System.Windows.Forms.ToolStripSeparator();
+            this.AutoScrollingBtn = new Tanji.Controls.BindableToolStripMenuItem();
             this.AlwaysOnTopBtn = new Tanji.Controls.BindableToolStripMenuItem();
             this.ToolsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.IgnoreMessagesBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.LogTxt = new System.Windows.Forms.RichTextBox();
+            this.LogTxt = new Tanji.Controls.RichLogBox();
             this.ViewOutgoingLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.ViewIncomingLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.LatencyLbl = new System.Windows.Forms.ToolStripStatusLabel();
@@ -72,7 +73,7 @@
             this.ToolsBtn});
             this.PacketLoggerMs.Location = new System.Drawing.Point(0, 0);
             this.PacketLoggerMs.Name = "PacketLoggerMs";
-            this.PacketLoggerMs.Size = new System.Drawing.Size(734, 24);
+            this.PacketLoggerMs.Size = new System.Drawing.Size(834, 24);
             this.PacketLoggerMs.TabIndex = 0;
             // 
             // FileBtn
@@ -92,6 +93,7 @@
             this.FindBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.FindBtn.Size = new System.Drawing.Size(191, 22);
             this.FindBtn.Text = "Find";
+            this.FindBtn.Click += new System.EventHandler(this.FindBtn_Click);
             // 
             // FindMessageBtn
             // 
@@ -112,6 +114,7 @@
             this.EmptyLogBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.EmptyLogBtn.Size = new System.Drawing.Size(191, 22);
             this.EmptyLogBtn.Text = "Empty Log";
+            this.EmptyLogBtn.Click += new System.EventHandler(this.EmptyLogBtn_Click);
             // 
             // ViewBtn
             // 
@@ -122,6 +125,7 @@
             this.ViewOutgoingBtn,
             this.ViewIncomingBtn,
             this.ViewSep2,
+            this.AutoScrollingBtn,
             this.AlwaysOnTopBtn});
             this.ViewBtn.Name = "ViewBtn";
             this.ViewBtn.Size = new System.Drawing.Size(44, 20);
@@ -239,6 +243,16 @@
             this.ViewSep2.Name = "ViewSep2";
             this.ViewSep2.Size = new System.Drawing.Size(193, 6);
             // 
+            // AutoScrollingBtn
+            // 
+            this.AutoScrollingBtn.Checked = true;
+            this.AutoScrollingBtn.CheckOnClick = true;
+            this.AutoScrollingBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoScrollingBtn.Name = "AutoScrollingBtn";
+            this.AutoScrollingBtn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.AutoScrollingBtn.Size = new System.Drawing.Size(196, 22);
+            this.AutoScrollingBtn.Text = "Auto-Scrolling";
+            // 
             // AlwaysOnTopBtn
             // 
             this.AlwaysOnTopBtn.CheckOnClick = true;
@@ -274,8 +288,9 @@
             this.LogTxt.ReadOnly = true;
             this.LogTxt.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.LogTxt.ShowSelectionMargin = true;
-            this.LogTxt.Size = new System.Drawing.Size(734, 463);
+            this.LogTxt.Size = new System.Drawing.Size(834, 463);
             this.LogTxt.TabIndex = 1;
+            this.LogTxt.TabStop = false;
             this.LogTxt.Text = "";
             // 
             // ViewOutgoingLbl
@@ -329,27 +344,27 @@
             this.RightPaddingLbl});
             this.PacketLoggerSs.Location = new System.Drawing.Point(0, 487);
             this.PacketLoggerSs.Name = "PacketLoggerSs";
-            this.PacketLoggerSs.Size = new System.Drawing.Size(734, 24);
+            this.PacketLoggerSs.Size = new System.Drawing.Size(834, 24);
             this.PacketLoggerSs.SizingGrip = false;
             this.PacketLoggerSs.TabIndex = 2;
             // 
             // LeftPaddingLbl
             // 
             this.LeftPaddingLbl.Name = "LeftPaddingLbl";
-            this.LeftPaddingLbl.Size = new System.Drawing.Size(70, 19);
+            this.LeftPaddingLbl.Size = new System.Drawing.Size(120, 19);
             this.LeftPaddingLbl.Spring = true;
             // 
             // RightPaddingLbl
             // 
             this.RightPaddingLbl.Name = "RightPaddingLbl";
-            this.RightPaddingLbl.Size = new System.Drawing.Size(70, 19);
+            this.RightPaddingLbl.Size = new System.Drawing.Size(120, 19);
             this.RightPaddingLbl.Spring = true;
             // 
             // PacketLoggerFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 511);
+            this.ClientSize = new System.Drawing.Size(834, 511);
             this.Controls.Add(this.LogTxt);
             this.Controls.Add(this.PacketLoggerSs);
             this.Controls.Add(this.PacketLoggerMs);
@@ -391,7 +406,7 @@
         private System.Windows.Forms.ToolStripSeparator ViewSep2;
         private Controls.BindableToolStripMenuItem AlwaysOnTopBtn;
         private System.Windows.Forms.ToolStripMenuItem IgnoreMessagesBtn;
-        private System.Windows.Forms.RichTextBox LogTxt;
+        private Controls.RichLogBox LogTxt;
         private System.Windows.Forms.ToolStripStatusLabel ViewOutgoingLbl;
         private System.Windows.Forms.ToolStripStatusLabel ViewIncomingLbl;
         private System.Windows.Forms.ToolStripStatusLabel LatencyLbl;
@@ -399,5 +414,6 @@
         private System.Windows.Forms.StatusStrip PacketLoggerSs;
         private System.Windows.Forms.ToolStripStatusLabel LeftPaddingLbl;
         private System.Windows.Forms.ToolStripStatusLabel RightPaddingLbl;
+        private Controls.BindableToolStripMenuItem AutoScrollingBtn;
     }
 }
